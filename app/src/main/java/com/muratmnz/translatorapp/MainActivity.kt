@@ -2,16 +2,21 @@ package com.muratmnz.translatorapp
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Message
 import android.util.Log
 import android.view.Menu
+import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.mlkit.common.model.DownloadConditions
 import com.google.mlkit.nl.translate.TranslateLanguage
 import com.google.mlkit.nl.translate.Translation
@@ -85,7 +90,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         translateBtn.setOnClickListener {
-
+            //Close keyboard when clicked button
+            translateBtn.onEditorAction(EditorInfo.IME_ACTION_DONE)
             validateData()
         }
 
@@ -109,6 +115,7 @@ class MainActivity : AppCompatActivity() {
     private fun startTranslation() {
         //set progress message and show
         progressDialog.setMessage("Processing language model...")
+        //progress dialog
         progressDialog.show()
 
         //init translatorOptions with source and target languages.
@@ -236,4 +243,12 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("ServiceCast")
+    private fun closeKeyboard() {
+        val view = this.currentFocus
+        if (view != null) {
+            val imm = getSystemService(Context.INPUT_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
 }
