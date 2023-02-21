@@ -21,11 +21,11 @@
             <EditText
                 android:id="@+id/sourceLanguageEt"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:inputType="text"
+                android:layout_height="67dp"
                 android:digits="qwertzuiopasdfghjklyxcvbnm"
+                android:gravity="center"
                 android:hint="Enter Word"
+                android:inputType="text"
                 android:minHeight="100dp"
                 android:textSize="18sp" />
 
@@ -56,7 +56,9 @@
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:text="English"
-            app:cornerRadius="15dp" />
+            app:cornerRadius="15dp"
+            app:icon="@android:drawable/arrow_down_float"
+            app:iconGravity="end" />
 
         <ImageView
             android:id="@+id/fromtoArrow"
@@ -72,7 +74,9 @@
             android:layout_marginStart="5dp"
             android:layout_weight="1"
             android:text="Turkish"
-            app:cornerRadius="15dp" />
+            app:cornerRadius="15dp"
+            app:icon="@android:drawable/arrow_down_float"
+            app:iconGravity="end" />
 
     </LinearLayout>
 

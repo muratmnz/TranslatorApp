@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var targetLanguageSelectBtn: MaterialButton
     private lateinit var translateBtn: MaterialButton
 
-    companion object{
+    companion object {
 
         //for printing logs
         private const val TAG = "MAIN_TAG"
@@ -45,8 +45,10 @@ class MainActivity : AppCompatActivity() {
 
     //Translator options to set source and destination language it
     private lateinit var translatorOptions: TranslatorOptions
+
     // translator object, for configuring it with source and target language
     private lateinit var translator: Translator
+
     // progressivedialog, to show while translation process
     private lateinit var progressDialog: ProgressDialog
 
@@ -95,11 +97,11 @@ class MainActivity : AppCompatActivity() {
 
         sourceLanguageText = sourceLanguageEt.text.toString().trim()
 
-        Log.d(TAG,"validateDate: sourceLanguageText: $sourceLanguageText")
+        Log.d(TAG, "validateDate: sourceLanguageText: $sourceLanguageText")
 
-        if (sourceLanguageText.isEmpty()){
+        if (sourceLanguageText.isEmpty()) {
             showToast("Enter text to translate...")
-        }else{
+        } else {
             startTranslation()
         }
     }
@@ -125,7 +127,7 @@ class MainActivity : AppCompatActivity() {
         translator.downloadModelIfNeeded(downloadConditions)
             .addOnSuccessListener {
                 // translation model ready to be translated
-                Log.d(TAG,"startTranslation: model ready, start translation...")
+                Log.d(TAG, "startTranslation: model ready, start translation...")
 
                 progressDialog.setMessage("Translating...")
 
@@ -138,46 +140,46 @@ class MainActivity : AppCompatActivity() {
 
                         targetLanguageTv.text = translatedText
                     }
-                    .addOnFailureListener {e ->
+                    .addOnFailureListener { e ->
                         progressDialog.dismiss()
-                        Log.d(TAG, "startTranslation: ",e)
+                        Log.d(TAG, "startTranslation: ", e)
                         showToast("Failed to translate due to ${e.message}")
                     }
             }
             .addOnFailureListener { e ->
                 progressDialog.dismiss()
-                Log.d(TAG, "startTranslation: ",e)
+                Log.d(TAG, "startTranslation: ", e)
                 showToast("Failed to translate due to ${e.message}")
                 // failed to ready translation model, cant proceed to translatiom
             }
     }
 
-    private fun loadAvailableLanguages(){
-            //init language array before starting adding data into it
-            languageArrayList = ArrayList()
+    private fun loadAvailableLanguages() {
+        //init language array before starting adding data into it
+        languageArrayList = ArrayList()
 
-            //get list all languages
-            val languageCodeList = TranslateLanguage.getAllLanguages()
+        //get list all languages
+        val languageCodeList = TranslateLanguage.getAllLanguages()
 
-            for (languageCode in languageCodeList){
-                val languageTitle = Locale(languageCode).displayLanguage
+        for (languageCode in languageCodeList) {
+            val languageTitle = Locale(languageCode).displayLanguage
 
-                Log.d(TAG,"loadAvailableLanguages: languageCode: $languageCode")
-                Log.d(TAG,"loadAvailableLanguages: languageTitle: $languageTitle")
+            Log.d(TAG, "loadAvailableLanguages: languageCode: $languageCode")
+            Log.d(TAG, "loadAvailableLanguages: languageTitle: $languageTitle")
 
-                val moduleLanguage = ModelLanguage(languageCode,languageTitle)
+            val moduleLanguage = ModelLanguage(languageCode, languageTitle)
 
-                languageArrayList!!.add(moduleLanguage)
-            }
-
+            languageArrayList!!.add(moduleLanguage)
         }
 
-    private fun sourceLanguageChoose(){
+    }
+
+    private fun sourceLanguageChoose() {
         val popupMenu = PopupMenu(this, sourceLanguageSelectBtn)
 
-        for (i in languageArrayList!!.indices){
+        for (i in languageArrayList!!.indices) {
 
-            popupMenu.menu.add(Menu.NONE,i,i,languageArrayList!![i].languageTitle)
+            popupMenu.menu.add(Menu.NONE, i, i, languageArrayList!![i].languageTitle)
         }
 
         popupMenu.show()
@@ -189,21 +191,21 @@ class MainActivity : AppCompatActivity() {
             sourceLanguageSelectBtn.text = sourceLanguageTitle
             sourceLanguageEt.hint = "Enter $sourceLanguageTitle"
 
-            Log.d(TAG,"loadAvailableLanguages: sourcelanguageCode: $sourceLanguageCode")
-            Log.d(TAG,"loadAvailableLanguages: sourcelanguageTitle: $sourceLanguageTitle")
+            Log.d(TAG, "loadAvailableLanguages: sourcelanguageCode: $sourceLanguageCode")
+            Log.d(TAG, "loadAvailableLanguages: sourcelanguageTitle: $sourceLanguageTitle")
 
             false
         }
     }
 
-    private fun  targetLanguageChoose(){
+    private fun targetLanguageChoose() {
         //init popupmenu param 1 is context, param 2 is the ui view around which we want to show popup menu, to choose source language from list
         val popupMenu = PopupMenu(this, targetLanguageSelectBtn)
 
         //from languageArrayList we will display language titles.
-        for (i in languageArrayList!!.indices){
+        for (i in languageArrayList!!.indices) {
 
-            popupMenu.menu.add(Menu.NONE,i,i,languageArrayList!![i].languageTitle)
+            popupMenu.menu.add(Menu.NONE, i, i, languageArrayList!![i].languageTitle)
         }
 
         //show popup menu
@@ -222,15 +224,15 @@ class MainActivity : AppCompatActivity() {
             targetLanguageSelectBtn.text = targetLanguageTitle
 
             //show in logs
-            Log.d(TAG,"loadAvailableLanguages: targetLanguageCode: $targetLanguageCode")
-            Log.d(TAG,"loadAvailableLanguages: targetLanguageTitle: $targetLanguageTitle")
+            Log.d(TAG, "loadAvailableLanguages: targetLanguageCode: $targetLanguageCode")
+            Log.d(TAG, "loadAvailableLanguages: targetLanguageTitle: $targetLanguageTitle")
 
             false
         }
     }
 
-    private fun showToast(message: String){
-        Toast.makeText(this,message,Toast.LENGTH_LONG).show()
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 
     }
 
